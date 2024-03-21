@@ -26,8 +26,8 @@
                 </li>
                 @auth
                     <li class="nav-item">
-                        <a class="nav-link @if (Route::is('admin/posts*')) active @endif"
-                            href="{{ route('admin.posts.index') }}">Posts</a>
+                        <a class="nav-link @if (Route::is('admin/project*')) active @endif"
+                            href="{{ route('admin.projects.index') }}">Posts</a>
                     </li>
                 @endauth
             </ul>

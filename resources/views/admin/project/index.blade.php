@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Posts')
+@section('title', 'Projects')
 
 @section('content')
 
@@ -20,23 +20,23 @@
             </tr>
         </thead>
         <tbody>
-            @forelse ($posts as $post)
+            @forelse ($projects as $project)
                 <tr>
-                    <th scope="row">{{ $post->id }}</th>
-                    <td>{{ $post->title }}</td>
-                    <td>{{ $post->slug }}</td>
-                    <td>{{ $post->created_at }}</td>
-                    <td>{{ $post->updated_at }}</td>
+                    <th scope="row">{{ $project->id }}</th>
+                    <td>{{ $project->title }}</td>
+                    <td>{{ $project->slug }}</td>
+                    <td>{{ $project->created_at }}</td>
+                    <td>{{ $project->updated_at }}</td>
                     <td>
                         <div class="d-flex justify-content-end gap-2">
-                            <a href="{{ route('admin.posts.show', $post) }}" class="btn btn-sm btn-primary">
+                            <a href="{{ route('admin.projects.show', $project) }}" class="btn btn-sm btn-primary">
                                 <i class="fas fa-eye"></i>
                             </a>
-                            <a href="{{ route('admin.posts.edit', $post) }}" class="btn btn-sm btn-warning">
+                            <a href="{{ route('admin.projects.edit', $project) }}" class="btn btn-sm btn-warning">
                                 <i class="fas fa-pencil"></i>
                             </a>
 
-                            <form action="{{ route('admin.posts.destroy', $post->id) }}" method="POST">
+                            <form action="{{ route('admin.projects.destroy', $project->id) }}" method="POST">
                                 @CSRF
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-sm btn-danger"><i

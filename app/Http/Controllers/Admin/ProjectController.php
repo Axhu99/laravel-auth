@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Post;
+use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class PostController extends Controller
+class ProjectController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $posts = Post::orderByDesc('updated_at')->orderByDesc('created_at')->get();
-        return view('admin.posts.index', compact('posts'));
+        $projects = Project::orderByDesc('updated_at')->orderByDesc('created_at')->get();
+        return view('admin.projects.index', compact('project'));
     }
 
     /**
@@ -36,15 +36,15 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Post $post)
+    public function show(Project $post)
     {
-        return view('admin.posts.show', compact('post'));
+        return view('admin.projects.show', compact('project'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Post $post)
+    public function edit(Project $project)
     {
         //
     }
@@ -52,7 +52,7 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, Project $project)
     {
         //
     }
@@ -60,10 +60,10 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Post $post)
+    public function destroy(Project $project)
     {
-        $post->delete();
+        $project->delete();
 
-        return to_route('admin.posts.index')->with('type', 'success')->with('message', 'Post eliminato con successo');
+        return to_route('admin.projects.index')->with('type', 'success')->with('message', 'Post eliminato con successo');
     }
 }
