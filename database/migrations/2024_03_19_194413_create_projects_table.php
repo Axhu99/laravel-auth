@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->text('content');
             $table->string('image')->nullable();
+            // TODO fare i tag e in base al tag fare uscire una relativa immagine
             $table->timestamps();
             $table->softDeletes();
         });

@@ -20,7 +20,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', GuestHomeController::class)->name('guest.home');
 
 Route::prefix('/admin')->name('admin.')->middleware('auth')->group(function () {
+
+    //Rotta ADMIN Home
     Route::get('', AdminHomeController::class)->name('home');
+
+    //Rotta ADMIN Project
     Route::resource('project', ProjectController::class);
 });
 
