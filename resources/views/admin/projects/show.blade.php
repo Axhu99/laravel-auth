@@ -31,7 +31,7 @@
                 <i class="fas fa-pencil me-2"></i> modifica
             </a>
 
-            <form action="{{ route('admin.projects.destroy', $project->id) }}" method="POST">
+            <form action="{{ route('admin.projects.destroy', $project->id) }}" method="POST" class="delete-form">
                 @CSRF
                 @method('DELETE')
                 <button type="submit" class="btn btn-danger"><i class="fas fa-trash-can me-2"></i> Elimina</button>
@@ -39,4 +39,8 @@
         </div>
     </footer>
 
+@endsection
+
+@section('scripts')
+    @vite('resources/js/delete.confirmation.js')
 @endsection

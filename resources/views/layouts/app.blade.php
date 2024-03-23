@@ -10,6 +10,11 @@
 
     <title>{{ config('app.name', 'Laravel') }} | @yield('title')</title>
 
+    <style>
+        body {
+            visibility: hidden;
+        }
+    </style>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">

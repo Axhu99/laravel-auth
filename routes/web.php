@@ -25,7 +25,7 @@ Route::prefix('/admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('', AdminHomeController::class)->name('home');
 
     //Rotta ADMIN Project
-    Route::resource('project', ProjectController::class);
+    Route::resource('projects', ProjectController::class);
 });
 
 Route::middleware('auth')->group(function () {

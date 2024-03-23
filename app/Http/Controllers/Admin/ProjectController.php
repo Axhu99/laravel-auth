@@ -14,7 +14,7 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::orderByDesc('updated_at')->orderByDesc('created_at')->get();
-        return view('admin.projects.index', compact('project'));
+        return view('admin.projects.index', compact('projects'));
     }
 
     /**
@@ -36,7 +36,7 @@ class ProjectController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Project $post)
+    public function show(Project $project)
     {
         return view('admin.projects.show', compact('project'));
     }
@@ -64,6 +64,6 @@ class ProjectController extends Controller
     {
         $project->delete();
 
-        return to_route('admin.projects.index')->with('type', 'success')->with('message', 'Post eliminato con successo');
+        return to_route('admin.projects.index')->with('type', 'success')->with('message', 'Progetto eliminato con successo');
     }
 }

@@ -5,7 +5,7 @@
 @section('content')
 
     <header>
-        <h1>Posts</h1>
+        <h1>PROGETTI</h1>
     </header>
 
     <table class="table">
@@ -36,7 +36,8 @@
                                 <i class="fas fa-pencil"></i>
                             </a>
 
-                            <form action="{{ route('admin.projects.destroy', $project->id) }}" method="POST">
+                            <form action="{{ route('admin.projects.destroy', $project->id) }}" method="POST"
+                                class="delete-form">
                                 @CSRF
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-sm btn-danger"><i
@@ -49,10 +50,14 @@
             @empty
                 <tr>
                     <td colspan="6">
-                        <h3 class="text-center">Non ci sono post</h3>
+                        <h3 class="text-center">Non ci sono PROGETTI</h3>
                     </td>
                 </tr>
             @endforelse
         </tbody>
     </table>
+@endsection
+
+@section('scripts')
+    @vite('resources/js/delete_confirmation.js')
 @endsection
