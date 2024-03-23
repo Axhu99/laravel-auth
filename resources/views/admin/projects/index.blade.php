@@ -29,7 +29,13 @@
                 <th scope="col">Stato</th>
                 <th scope="col">Creato il</th>
                 <th scope="col">Ultima modifica</th>
-                <th></th>
+                <th>
+                    <div class="d-flex justify-content-end">
+                        <a href="{{ route('admin.projects.create') }}" class="btn btn-sm btn-success">
+                            <i class="fas fa-plus me-2"></i>Nuovo progetto
+                        </a>
+                    </div>
+                </th>
             </tr>
         </thead>
         <tbody>
