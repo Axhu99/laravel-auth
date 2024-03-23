@@ -4,8 +4,20 @@
 
 @section('content')
 
-    <header>
+    <header class="d-flex align-items-center justify-content-between">
         <h1>PROGETTI</h1>
+
+        {{-- Filtro --}}
+        <form action="{{ route('admin.projects.index') }}" method="GET">
+            <div class="input-group">
+                <select class="form-select" name='filter'>
+                    <option value="">Tutti</option>
+                    <option value="published" @if ($filter === 'published') selected @endif>Pubblicati</option>
+                    <option value="drafts" @if ($filter === 'drafts') selected @endif>Bozze</option>
+                </select>
+                <button class="btn btn-outline-secondary">Button</button>
+            </div>
+        </form>
     </header>
 
     <table class="table">
@@ -14,6 +26,7 @@
                 <th scope="col">#</th>
                 <th scope="col">Titolo</th>
                 <th scope="col">Slug</th>
+                <th scope="col">Stato</th>
                 <th scope="col">Creato il</th>
                 <th scope="col">Ultima modifica</th>
                 <th></th>
@@ -25,6 +38,7 @@
                     <th scope="row">{{ $project->id }}</th>
                     <td>{{ $project->title }}</td>
                     <td>{{ $project->slug }}</td>
+                    <td>{{ $project->is_published ? 'Pubblicato' : 'Bozza' }}</td>
                     <td>{{ $project->created_at }}</td>
                     <td>{{ $project->updated_at }}</td>
                     <td>
@@ -56,6 +70,10 @@
             @endforelse
         </tbody>
     </table>
+
+    @if ($projects->hasPages())
+        {{ $projects->links() }}
+    @endif
 @endsection
 
 @section('scripts')
