@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Validation\Rule;
 
 class ProjectController extends Controller
 {
@@ -42,6 +43,21 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'title' => 'required|string|min:5|max:50|unique:projects',
+            'content' => 'required|string',
+            'image' => 'nullable|url',
+            'is_published' => 'nullable|boolean',
+        ], [
+            'title.required' => 'Il titolo e\' obbligatorio',
+            'title.unique' => 'Questo titolo e\' gia\' stato utilizzato',
+            'title.min' => 'Il titolo deve essere almeno :min caratteri',
+            'title.max' => 'Il titolo deve essere massimo :max caratteri',
+            'image.url' => 'L\'indirizzo non e\' valido',
+            'is_published.boolean' => 'Il valore del campo pubblicazione non e\' valido',
+            'content.required' => 'La descrizione e\' obblogatoria',
+        ]);
+
         $data = $request->all();
 
         $project = new Project();
@@ -76,6 +92,21 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
+        $request->validate([
+            'title' => ['required', 'string', 'min:5', 'max:50', Rule::unique('projects')->ignore($project->id)],
+            'content' => 'required|string',
+            'image' => 'nullable|url',
+            'is_published' => 'nullable|boolean',
+        ], [
+            'title.required' => 'Il titolo e\' obbligatorio',
+            'title.unique' => 'Questo titolo e\' gia\' stato utilizzato',
+            'title.min' => 'Il titolo deve essere almeno :min caratteri',
+            'title.max' => 'Il titolo deve essere massimo :max caratteri',
+            'image.url' => 'L\'indirizzo non e\' valido',
+            'is_published.boolean' => 'Il valore del campo pubblicazione non e\' valido',
+            'content.required' => 'La descrizione e\' obblogatoria',
+        ]);
+
         $data = $request->all();
 
         $data['slug'] = Str::slug($data['title']);

@@ -10,24 +10,56 @@
     <div class="col-12">
         <div class="mb-3">
             <label for="title" class="form-label">Titolo</label>
-            <input type="text" class="form-control" name="title" id="title" placeholder="Nome del progetto..."
+            <input type="text"
+                class="form-control @error('title') is-invalid @elseif(old('title', '')) is-valid @enderror"
+                name="title" id="title" placeholder="Nome del progetto..."
                 value="{{ old('title', $project->title) }}">
+            @error('title')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @else
+                <div class="form-text">
+                    Inserisci il titolo del progetto
+                </div>
+            @enderror
         </div>
     </div>
     <div class="col-12">
         <div class="mb-3">
             <label for="content" class="form-label">Descrizione del progetto</label>
-            <textarea class="form-control" name="content" id="content" rows="20">
+            <textarea class="form-control @error('content') is-invalid @elseif(old('content', '')) is-valid @enderror"
+                name="content" id="content" rows="20">
                     {{ old('content', $project->content) }}
                 </textarea>
+            @error('content')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @else
+                <div class="form-text">
+                    Inserisci una descrizione del progetto
+                </div>
+            @enderror
         </div>
     </div>
     <div class="col-11">
-        <div class="mb-3">
+        <div>
             <label for="image" class="form-label">Immagine</label>
-            <input type="url" class="form-control" name="image" id="image" placeholder="http:// o hattps://"
+            <input type="url"
+                class="form-control @error('image') is-invalid @elseif(old('image', '')) is-valid @enderror"
+                name="image" id="image" placeholder="http:// o hattps://"
                 value="{{ old('image', $project->image) }}">
         </div>
+        @error('image')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+        @else
+            <div class="form-text">
+                Inserisci un url assoluto di un file immagine
+            </div>
+        @enderror
     </div>
     <div class="col-1">
         <img src="{{ old('image', $project->image ?? 'https://marcolanci.it/boolean/assets/placeholder.png') }}"
@@ -35,7 +67,7 @@
     </div>
     <div class="col-12 d-flex justify-content-end">
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="is_published" id="is_published"
+            <input class="form-check-input" type="checkbox" name="is_published" id="is_published" value="1"
                 @if (old('is_published', $project->is_published)) checked @endif>
             <label class="form-check-label" for="is_published">
                 Pubblicato

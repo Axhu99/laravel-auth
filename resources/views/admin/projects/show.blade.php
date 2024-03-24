@@ -42,5 +42,5 @@
 @endsection
 
 @section('scripts')
-    @vite('resources/js/delete.confirmation.js')
+    @vite('resources/js/delete_confirmation.js')
 @endsection
