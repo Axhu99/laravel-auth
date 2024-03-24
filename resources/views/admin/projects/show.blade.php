@@ -27,7 +27,7 @@
             <i class="fas fa-arrow-left me-1"></i>Torna indietro
         </a>
         <div class="d-flex justify-content-between gap-2">
-            <a href="{{ route('admin.projects.edit', $project) }}" class="btn btn-warning">
+            <a href="{{ route('admin.projects.edit', $project) }}" class="btn btn-light">
                 <i class="fas fa-pencil me-2"></i> modifica
             </a>
 

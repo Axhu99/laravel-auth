@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Project;
 use Illuminate\Support\Str;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -46,6 +47,7 @@ class ProjectController extends Controller
 
         $project->fill($data);
         $project->slug = Str::slug($project['title']);
+        $project->is_published = Arr::exists($data, 'is_published');
 
         $project->save();
 
@@ -65,7 +67,7 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        //
+        return view('admin.projects.edit', compact('project'));
     }
 
     /**
@@ -73,7 +75,14 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        //
+        $data = $request->all();
+
+        $data['slug'] = Str::slug($data['title']);
+        $data['is_published'] = Arr::exists($data, 'is_published');
+
+        $project->update($data);
+
+        return to_route('admin.projects.show', $project)->with('message', 'Progetto modificato con successo')->with('type', 'success');
     }
 
     /**

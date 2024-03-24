@@ -35,8 +35,17 @@
                 </div>
             </div>
             <div class="col-1">
-                <img src="https://marcolanci.it/boolean/assets/placeholder.png" alt="immagine" id="preview"
-                    class="img-fluid">
+                <img src="{{ old('image', 'https://marcolanci.it/boolean/assets/placeholder.png') }}" alt="immagine"
+                    id="preview" class="img-fluid">
+            </div>
+            <div class="col-12 d-flex justify-content-end">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="is_published" id="is_published"
+                        @if (old('is_published')) checked @endif>
+                    <label class="form-check-label" for="is_published">
+                        Pubblicato
+                    </label>
+                </div>
             </div>
         </div>
 
@@ -44,10 +53,22 @@
             <a href="{{ route('admin.projects.index') }}" class="btn btn-secondary">Torna indietro</a>
 
             <div class="d-flex align-items-center gap-2">
-                <button type="reset" class="btn btn-secondaty"><i class="fa-solid fa-eraser"></i> Svuota i campi</button>
-                <button type="submit" class="btn btn-success "><i class="fas fa-floppy-disk me-2"></i>Salva</button>
+                <button type="reset" class="btn btn-light"><i class="fa-solid fa-eraser"></i> Svuota i campi</button>
+                <button type="submit" class="btn btn-primary "><i class="fas fa-floppy-disk me-2"></i>Salva</button>
             </div>
         </div>
     </form>
 
+@endsection
+
+@section('scripts')
+    <script>
+        const placeholder = 'https://marcolanci.it/boolean/assets/placeholder.png';
+        const input = document.getElementById('image');
+        const preview = document.getElementById('preview');
+
+        input.addEventListenner('input', () => {
+            preview.src = input.value || placeholder;
+        })
+    </script>
 @endsection
