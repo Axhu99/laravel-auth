@@ -27,6 +27,10 @@ Route::prefix('/admin')->name('admin.')->middleware('auth')->group(function () {
     //Rotta ADMIN Home
     Route::get('', AdminHomeController::class)->name('home');
 
+    Route::get('/projects/trash', [AdminProjectController::class, 'trash'])->name('projects.trash');
+    Route::patch('/projects/{project}/restore', [AdminProjectController::class, 'restore'])->name('projects.restore')->withTrashed();
+    Route::delete('/projects/{project}/drop', [AdminProjectController::class, 'drop'])->name('projects.drop')->withTrashed();
+
     //Rotta ADMIN Project
     Route::resource('projects', AdminProjectController::class);
 });

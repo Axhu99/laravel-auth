@@ -5,21 +5,11 @@
 @section('content')
 
     <header class="d-flex align-items-center justify-content-between">
-        <h1>PROGETTI</h1>
+        <h1>PROGETTI ELEMINATI</h1>
 
-        <a href="{{ route('admin.projects.trash') }}">Cestino</a>
-
-        {{-- Filtro --}}
-        <form action="{{ route('admin.projects.index') }}" method="GET">
-            <div class="input-group">
-                <select class="form-select" name='filter'>
-                    <option value="">Tutti</option>
-                    <option value="published" @if ($filter === 'published') selected @endif>Pubblicati</option>
-                    <option value="drafts" @if ($filter === 'drafts') selected @endif>Bozze</option>
-                </select>
-                <button class="btn btn-outline-secondary">Filtra</button>
-            </div>
-        </form>
+        <a href="{{ route('admin.projects.index') }}" class="btn btn-sm btn-primary">
+            Vedi progetti attivi
+        </a>
     </header>
 
     <table class="table table-striped">
@@ -33,8 +23,8 @@
                 <th scope="col">Ultima modifica</th>
                 <th>
                     <div class="d-flex justify-content-end">
-                        <a href="{{ route('admin.projects.create') }}" class="btn btn-sm btn-light">
-                            <i class="fas fa-plus me-2"></i>Nuovo progetto
+                        <a href="{{ route('admin.projects.index') }}" class="btn btn-sm btn-danger">
+                            Svuota cestino
                         </a>
                     </div>
                 </th>
@@ -58,12 +48,20 @@
                                 <i class="fas fa-pencil"></i>
                             </a>
 
-                            <form action="{{ route('admin.projects.destroy', $project->id) }}" method="POST"
+                            <form action="{{ route('admin.projects.drop', $project->id) }}" method="POST"
                                 class="delete-form">
                                 @CSRF
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-sm btn-danger"><i
                                         class="fas fa-trash-can"></i></button>
+                            </form>
+
+                            <form action="{{ route('admin.projects.restore', $project->id) }}" method="POST"
+                                class="delete-form">
+                                @CSRF
+                                @method('PATCH')
+                                <button type="submit" class="btn btn-sm btn-success"><i
+                                        class="fas fa-arrows-rotate"></i></button>
                             </form>
 
                         </div>
@@ -78,10 +76,6 @@
             @endforelse
         </tbody>
     </table>
-
-    @if ($projects->hasPages())
-        {{ $projects->links() }}
-    @endif
 @endsection
 
 @section('scripts')
