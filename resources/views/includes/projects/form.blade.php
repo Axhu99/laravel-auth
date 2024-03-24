@@ -7,7 +7,7 @@
 
 @CSRF
 <div class="row">
-    <div class="col-12">
+    <div class="col-6">
         <div class="mb-3">
             <label for="title" class="form-label">Titolo</label>
             <input type="text"
@@ -23,6 +23,13 @@
                     Inserisci il titolo del progetto
                 </div>
             @enderror
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="mb-3">
+            <label for="slug" class="form-label">Slug</label>
+            <input type="text" class="form-control" id="slug"
+                value="{{ Str::slug(old('title', $project->title)) }}" disabled>
         </div>
     </div>
     <div class="col-12">

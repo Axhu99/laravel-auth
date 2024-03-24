@@ -14,4 +14,13 @@
 
 @section('scripts')
     @vite('resources/js/image_preview.js')
+
+    <script>
+        const titleField = document.getElementById('title');
+        const slugField = documenti.getElementById('slug');
+
+        titleField.addEventListener('blur', () => {
+            slugField.value = titleField.trim().toLowerCase().split(' ').join('-')
+        })
+    </script>
 @endsection

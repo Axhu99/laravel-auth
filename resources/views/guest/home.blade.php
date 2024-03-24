@@ -11,8 +11,10 @@
 
     @forelse ($projects as $project)
         <div class="card my-3">
-            <div class="card-header">
+            <div class="card-header d-flex align-items-center justify-content-between">
                 {{ $project->title }}
+
+                <a href="{{ route('guest.projects.show', $project->slug) }}" class="btn btn-sm btn-primary">Vedi</a>
             </div>
             <div class="card-body">
                 <div class="row">
