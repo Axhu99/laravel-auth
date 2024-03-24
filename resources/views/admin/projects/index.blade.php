@@ -15,12 +15,12 @@
                     <option value="published" @if ($filter === 'published') selected @endif>Pubblicati</option>
                     <option value="drafts" @if ($filter === 'drafts') selected @endif>Bozze</option>
                 </select>
-                <button class="btn btn-outline-secondary">Button</button>
+                <button class="btn btn-outline-secondary">Filtra</button>
             </div>
         </form>
     </header>
 
-    <table class="table">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th scope="col">#</th>
@@ -31,7 +31,7 @@
                 <th scope="col">Ultima modifica</th>
                 <th>
                     <div class="d-flex justify-content-end">
-                        <a href="{{ route('admin.projects.create') }}" class="btn btn-sm btn-success">
+                        <a href="{{ route('admin.projects.create') }}" class="btn btn-sm btn-light">
                             <i class="fas fa-plus me-2"></i>Nuovo progetto
                         </a>
                     </div>
@@ -49,10 +49,10 @@
                     <td>{{ $project->getFormattedDate('updated_at') }}</td>
                     <td>
                         <div class="d-flex justify-content-end gap-2">
-                            <a href="{{ route('admin.projects.show', $project) }}" class="btn btn-sm btn-primary">
+                            <a href="{{ route('admin.projects.show', $project) }}" class="btn btn-sm btn-info">
                                 <i class="fas fa-eye"></i>
                             </a>
-                            <a href="{{ route('admin.projects.edit', $project) }}" class="btn btn-sm btn-warning">
+                            <a href="{{ route('admin.projects.edit', $project) }}" class="btn btn-sm btn-light">
                                 <i class="fas fa-pencil"></i>
                             </a>
 
