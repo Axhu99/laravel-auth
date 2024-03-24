@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 class ProjectController extends Controller
@@ -46,14 +47,15 @@ class ProjectController extends Controller
         $request->validate([
             'title' => 'required|string|min:5|max:50|unique:projects',
             'content' => 'required|string',
-            'image' => 'nullable|url',
+            'image' => 'nullable|image|mimes:png,jpg,jpeg',
             'is_published' => 'nullable|boolean',
         ], [
             'title.required' => 'Il titolo e\' obbligatorio',
             'title.unique' => 'Questo titolo e\' gia\' stato utilizzato',
             'title.min' => 'Il titolo deve essere almeno :min caratteri',
             'title.max' => 'Il titolo deve essere massimo :max caratteri',
-            'image.url' => 'L\'indirizzo non e\' valido',
+            'image.image' => 'Il file inserito non e\' un immagine',
+            'image.image' => 'Le estensioni valide sono .png, .jpg, .jpeg',
             'is_published.boolean' => 'Il valore del campo pubblicazione non e\' valido',
             'content.required' => 'La descrizione e\' obblogatoria',
         ]);
@@ -65,6 +67,15 @@ class ProjectController extends Controller
         $project->fill($data);
         $project->slug = Str::slug($project['title']);
         $project->is_published = Arr::exists($data, 'is_published');
+
+        //Controllo se arriva un file
+        if (Arr::exists($data, 'image')) {
+            $extension = $data['image']->extension();
+
+            //salvo e prendo l'url
+            $img_url = Storage::putFile('project_images', $data['image'], "$project->slug.$extension");
+            $project->image = $img_url;
+        }
 
         $project->save();
 
@@ -95,14 +106,15 @@ class ProjectController extends Controller
         $request->validate([
             'title' => ['required', 'string', 'min:5', 'max:50', Rule::unique('projects')->ignore($project->id)],
             'content' => 'required|string',
-            'image' => 'nullable|url',
+            'image' => 'nullable|image|mimes:png,jpg,jpeg',
             'is_published' => 'nullable|boolean',
         ], [
             'title.required' => 'Il titolo e\' obbligatorio',
             'title.unique' => 'Questo titolo e\' gia\' stato utilizzato',
             'title.min' => 'Il titolo deve essere almeno :min caratteri',
             'title.max' => 'Il titolo deve essere massimo :max caratteri',
-            'image.url' => 'L\'indirizzo non e\' valido',
+            'image.image' => 'Il file inserito non e\' un immagine',
+            'image.image' => 'Le estensioni valide sono .png, .jpg, .jpeg',
             'is_published.boolean' => 'Il valore del campo pubblicazione non e\' valido',
             'content.required' => 'La descrizione e\' obblogatoria',
         ]);
@@ -111,6 +123,17 @@ class ProjectController extends Controller
 
         $data['slug'] = Str::slug($data['title']);
         $data['is_published'] = Arr::exists($data, 'is_published');
+
+        //Controllo se arriva un file
+        if (Arr::exists($data, 'image')) {
+            //controllo se aveva gia' immagine
+            if ($project->image) Storage::delete($project->image);
+
+            //salvo e prendo l'url
+            $extension = $data['image']->extension();
+            $img_url = Storage::putFile('project_images', $data['image'], "{$data['slug']}.$extension");
+            $project->image = $img_url;
+        }
 
         $project->update($data);
 
@@ -144,6 +167,9 @@ class ProjectController extends Controller
 
     public function drop(Project $project)
     {
+        //controllo se aveva gia' immagine
+        if ($project->image) Storage::delete($project->image);
+
         $project->forceDelete();
 
         return to_route('admin.projects.trash')->with('type', 'success')->with('message', 'Eleminato definitivamente');

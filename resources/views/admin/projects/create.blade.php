@@ -17,10 +17,10 @@
 
     <script>
         const titleField = document.getElementById('title');
-        const slugField = documenti.getElementById('slug');
+        const slugField = document.getElementById('slug');
 
         titleField.addEventListener('blur', () => {
-            slugField.value = titleField.trim().toLowerCase().split(' ').join('-')
+            slugField.value = titleField.value.trim().toLowerCase().split(' ').join('-');
         })
     </script>
 @endsection
