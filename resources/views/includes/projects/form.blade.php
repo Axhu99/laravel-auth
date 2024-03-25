@@ -69,8 +69,10 @@
         @enderror
     </div>
     <div class="col-1">
-        <img src="{{ old('image', $project->image) ? asset('storage/' . old('image', $project->image)) : 'https://marcolanci.it/boolean/assets/placeholder.png' }}"
-            alt="immagine" id="preview" class="img-fluid">
+        <img src="{{ old('image', $project->image)
+            ? $project->printImage()
+            : 'https://marcolanci.it/boolean/assets/placeholder.png' }}"
+            alt="{{ $project->image ? $project->slug : 'preview' }}" id="preview" class="img-fluid">
     </div>
     <div class="col-12 d-flex justify-content-end">
         <div class="form-check">
