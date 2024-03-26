@@ -43,6 +43,7 @@
         </main>
     </div>
 
+    @include('includes.modal')
     @yield('scripts')
 </body>
 

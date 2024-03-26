@@ -49,7 +49,7 @@
                             </a>
 
                             <form action="{{ route('admin.projects.drop', $project->id) }}" method="POST"
-                                class="delete-form">
+                                class="delete-form" data-bs-toggle="modal" data-bs-target="#modal">
                                 @CSRF
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-sm btn-danger"><i
