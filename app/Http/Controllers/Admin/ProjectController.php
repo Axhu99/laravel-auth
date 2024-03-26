@@ -174,4 +174,16 @@ class ProjectController extends Controller
 
         return to_route('admin.projects.trash')->with('type', 'success')->with('message', 'Eleminato definitivamente');
     }
+
+    // Rotta pubblicazione
+    public function togglePublication(Project $project)
+    {
+        $project->is_published = !$project->is_published;
+        $project->save();
+
+        $action = $project->is_published ? 'pubblicato' : 'salvato come bozza';
+
+        //torna da chi ti ha chiamato
+        return back()->with('message', "Il progetto $project->title e\' stato $action")->with('type', 'success');
+    }
 }

@@ -28,7 +28,7 @@
                 <th scope="col">#</th>
                 <th scope="col">Titolo</th>
                 <th scope="col">Slug</th>
-                <th scope="col">Stato</th>
+                <th scope="col">Pubblicato</th>
                 <th scope="col">Creato il</th>
                 <th scope="col">Ultima modifica</th>
                 <th>
@@ -46,7 +46,20 @@
                     <th scope="row">{{ $project->id }}</th>
                     <td>{{ $project->title }}</td>
                     <td>{{ $project->slug }}</td>
-                    <td>{{ $project->is_published ? 'Pubblicato' : 'Bozza' }}</td>
+                    <td>
+                        <form action="{{ route('admin.projects.publish', $project->id) }}" method="POST"
+                            class="publication-form" onclick="this.submit()">
+                            @CSRF
+                            @method('PATCH')
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="button"
+                                    id="{{ 'is_published-' . $project->id }}"
+                                    @if ($project->is_published) checked @endif>
+                                <label class="form-check-label"
+                                    for="{{ 'is_published-' . $project->id }}">{{ $project->is_published ? 'Pubblicato' : 'Bozza' }}</label>
+                            </div>
+                        </form>
+                    </td>
                     <td>{{ $project->getFormattedDate('created_at') }}</td>
                     <td>{{ $project->getFormattedDate('updated_at') }}</td>
                     <td>
